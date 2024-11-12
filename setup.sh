@@ -8,18 +8,18 @@ set -ex
 AFLPP=$(pwd)/aflplusplus
 DISTRO=`awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"'`
 
-if [[ "Ubuntu" == "$DISTRO" ]]; then
+# if [[ "Ubuntu" == "$DISTRO" ]]; then
 # package install
-sudo apt-get install -y make autoconf automake libtool shtool wget curl \
-                       xz-utils gcc g++ cmake \
-                       ninja-build zlib1g make python \
-                       build-essential git ca-certificates \
-                       tar gzip vim libelf-dev libelf1 libiberty-dev \
-                       libboost-all-dev python3-pip python3-venv \
-                       libpcap-dev libbz2-dev liblzo2-dev liblzma-dev liblz4-dev libz-dev \
-                       libxml2-dev libssl-dev libacl1-dev libattr1-dev zip \
-                       unzip libtool-bin bison flex libpixman-1-dev
-fi
+# sudo apt-get install -y make autoconf automake libtool shtool wget curl \
+#                        xz-utils gcc g++ cmake \
+#                        ninja-build zlib1g make python \
+#                        build-essential git ca-certificates \
+#                        tar gzip vim libelf-dev libelf1 libiberty-dev \
+#                        libboost-all-dev python3-pip python3-venv \
+#                        libpcap-dev libbz2-dev liblzo2-dev liblzma-dev liblz4-dev libz-dev \
+#                        libxml2-dev libssl-dev libacl1-dev libattr1-dev zip \
+#                        unzip libtool-bin bison flex libpixman-1-dev
+# fi
 
 # trigger download of retrowrite and other submodules
 git submodule update --init --recursive
@@ -52,5 +52,6 @@ popd && popd
 
 echo "[*] Building Retrowrite using Retrowrite's helper script"
 pushd retrowrite
-./setup.sh
+pip install -r requirements.txt
+python setup.py develop
 popd
