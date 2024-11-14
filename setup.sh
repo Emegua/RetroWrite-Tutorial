@@ -24,15 +24,6 @@ DISTRO=`awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"'`
 # trigger download of retrowrite and other submodules
 git submodule update --init --recursive
 
-# Tune system to work with AFL++
-echo 'core' | sudo tee /proc/sys/kernel/core_pattern
-if [[ -f /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ]]; then
-pushd /sys/devices/system/cpu 
-echo performance | sudo tee cpu*/cpufreq/scaling_governor
-popd
-fi
-
-
 # build AFL++:
 echo "[*] Cloning AFL++ into $AFLPP"
 if [[ ! -d $AFLPP ]]; then
